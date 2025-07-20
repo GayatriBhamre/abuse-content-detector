@@ -1,23 +1,38 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request
 import joblib
-import re
+import numpy as np
 
 app = Flask(__name__)
-model = joblib.load('text_classifier.pkl')
-vectorizer = joblib.load('vectorizer.pkl')
 
-@app.route('/')
+# Load the model and vectorizer
+model, vectorizer = joblib.load("model.pkl")
+
+@app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template('index.html')
+    prediction = None
+    confidence = None
+    polite_suggestion = None
+    comment = ""
 
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.get_json()
-    comment = data.get('comment', '')
-    comment_cleaned = re.sub(r"[^a-zA-Z\s]", "", comment.lower())
-    X = vectorizer.transform([comment_cleaned])
-    prediction = int(model.predict(X)[0])
-    return jsonify({'prediction': prediction})
+    if request.method == "POST":
+        comment = request.form["comment"]
+        if comment.strip() != "":
+            vectorized = vectorizer.transform([comment])
+            prediction_label = model.predict(vectorized)[0]
+            prediction_proba = model.predict_proba(vectorized)[0]
+            confidence_score = np.max(prediction_proba) * 100
 
-if __name__ == '__main__':
+            prediction = "Abusive" if prediction_label == 1 else "Clean"
+            confidence = f"{confidence_score:.2f}%"
+
+            if prediction == "Abusive":
+                polite_suggestion = "Try saying this instead: ‘I didn’t like that behavior.’"
+
+    return render_template("index.html", 
+                           prediction=prediction, 
+                           confidence=confidence, 
+                           comment=comment, 
+                           polite_suggestion=polite_suggestion)
+
+if __name__ == "__main__":
     app.run(debug=True)
