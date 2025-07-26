@@ -1,11 +1,35 @@
 from flask import Flask, render_template, request
 import joblib
 import numpy as np
+import random
 
 app = Flask(__name__)
 
-# Load the model and vectorizer
+
 model, vectorizer = joblib.load("model.pkl")
+
+# Polite suggestion list
+polite_suggestions_list = [
+    "Try saying: 'That wasn’t appropriate.'",
+    "Try: 'I found that offensive.'",
+    "You could say: 'Please be respectful.'",
+    "How about: 'I didn’t like that behavior.'"
+     "Try saying: 'That wasn’t appropriate.'",
+    "Try: 'I found that offensive.'",
+    "You could say: 'Please be respectful.'",
+    "How about: 'I didn’t like that behavior.'",
+    "You could say: 'Let's keep the conversation kind.'",
+    "Try: 'Please watch your language.'",
+    "Consider saying: 'That came across as hurtful.'",
+    "Try this: 'Let’s speak with kindness.'",
+    "You might say: 'That could be phrased more gently.'",
+    "How about: 'Let’s be more considerate.'",
+    "Try: 'I prefer respectful discussions.'",
+    "Consider: 'Let's maintain a positive tone.'",
+    "Say instead: 'Let’s be mindful of our words.'",
+    "Try: 'Please avoid saying things like that.'",
+    "How about: 'That sounded harsh, maybe rephrase?'"
+]
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -26,7 +50,7 @@ def index():
             confidence = f"{confidence_score:.2f}%"
 
             if prediction == "Abusive":
-                polite_suggestion = "Try saying this instead: ‘I didn’t like that behavior.’"
+                polite_suggestion = random.choice(polite_suggestions_list)
 
     return render_template("index.html", 
                            prediction=prediction, 

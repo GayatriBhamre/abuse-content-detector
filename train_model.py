@@ -15,10 +15,35 @@ data = {
         "You're the best!",
         "Stupid moron!",
         "You're kind and helpful.",
-        "I hate you so much."
+        "I hate you so much.",
+        "You're a wonderful friend.",
+        "You disgust me!",
+        "I'm really proud of you.",
+        "You're a piece of trash.",
+        "You always help others.",
+        "Get lost, loser!",
+        "That's very thoughtful of you.",
+        "You're an annoying pest.",
+        "I appreciate your efforts.",
+        "You make me sick.",
+        "Thanks for being there!",
+        "You're dumb as a rock.",
+        "Well done, keep it up!",
+        "You're the worst human ever.",
+        "That’s very sweet of you!",
+        "Screw you and your face.",
+        "You're doing amazing work!",
+        "Nobody wants you here.",
+        "I respect your honesty.",
+        "You're a worthless jerk!"
     ],
-    "label": [0, 1, 0, 1, 0, 1, 0, 1, 0, 1]  # 1 = abusive, 0 = clean
+    "label": [
+        0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+        0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+        0, 1, 0, 1, 0, 1, 0, 1, 0, 1
+    ]
 }
+
 
 df = pd.DataFrame(data)
 

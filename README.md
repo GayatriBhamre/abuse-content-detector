@@ -12,12 +12,20 @@ This is a simple web application that detects abusive or offensive language in u
 
 ---
 
+## 🖥️ Screenshot
+
+![App Screenshot](screenshots/output1.png)
+![App Screenshot](screenshots/output2.png)
+
+
+---
+
 ## 🛠️ Technologies Used
 
 - Python
 - Flask
 - Scikit-learn (Machine Learning)
-- HTML, CSS, JavaScript
+- HTML, Css
 
 ---
 
